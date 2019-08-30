@@ -13,7 +13,11 @@ class ProviderController {
                     attributes: ['name', 'path', 'url']
                 }
             ]
-        })
+        });
+
+        return res.json(providers);
+
+
     }
 }
 

@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import { startOfHour, parseISO, isBefore } from 'date-fns';
 import Appointment from '../models/Appointment';
 import User from '../models/User';
 import File from '../models/File';
@@ -29,7 +28,7 @@ class AppointmentController {
             }]
         });
 
-        return json(appointments);
+        return res.json(appointments);
     }
 
 
