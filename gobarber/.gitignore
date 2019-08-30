@@ -1,4 +1,5 @@
 backend/node_modules
+backend/tmp/*
 backend/package-lock.json
 backend/yarn.lock
 backend/yarn-error.log
