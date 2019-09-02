@@ -5,3 +5,4 @@ backend/yarn.lock
 backend/yarn-error.log
 backend/._*
 backend/._DS_*
+backend/.env
