@@ -1,6 +1,6 @@
 import { startOfDay, endOfDay, setHours, setMinutes, setSeconds, format, isAfter } from 'date-fns';
 import Appointment from '../models/Appointment';
-import { Op } from 'sequelize/types';
+import { Op } from 'sequelize';
 
 class AvailableController {
     async index(req, res) {
@@ -47,8 +47,6 @@ class AvailableController {
             value: format(value, "yyyy-MM-dd'T'HH:mm:ssxxx"),
             available: isAfter(value, new Date()) && !appointments.find(a => format(a.date, 'HH:mm') === time)
         }
-
-        return res.json(appointments);
     }
 }
 

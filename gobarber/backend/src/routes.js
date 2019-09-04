@@ -37,6 +37,4 @@ routes.put('/notifications/:id', NotificationController.update);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
-
-
 export default routes;
