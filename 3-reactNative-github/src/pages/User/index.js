@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, ActivityIndicator } from 'react-native';
 import api from '../../services/api';
@@ -21,7 +21,7 @@ export default class User extends Component {
         stars: []
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const { navigation } = this.props;
         const user = navigation.getParam('user');
 
@@ -47,7 +47,7 @@ export default class User extends Component {
 
                 <Stars
                     data={stars}
-                    keyExtractor={start => String(stars.id)}
+                    keyExtractor={star => String(star.id)}
                     renderItem={({ item }) => (
                         <Starred>
                             <OwnerAvatar source={{ uri: item.owner.avatar_url }} />

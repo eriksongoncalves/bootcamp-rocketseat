@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Keyboard, ActivityIndicator } from 'react-native';
@@ -25,12 +25,19 @@ export default class Main extends Component {
     }
 
     async componentDidMount() {
-        const users = await AsyncStorage.setItem('users', JSON.stringify(users));
+        console.tron.log("teste");
 
-        if (users) {
-            this.setState({
-                users: JSON.parse(users)
-            })
+        try {
+            const users = await AsyncStorage.getItem('users');
+
+            if (users) {
+                this.setState({
+                    users: JSON.parse(users)
+                })
+            }
+        }
+        catch (e) {
+            console.tron.log("componentDidMount", e);
         }
     }
 
@@ -38,6 +45,7 @@ export default class Main extends Component {
         const { users } = this.state;
 
         if (prevState.users !== users) {
+            console.tron.log("prevState", prevState);
             AsyncStorage.setItem('users', JSON.stringify(users));
         }
 
@@ -48,22 +56,28 @@ export default class Main extends Component {
 
         this.setState({ loading: true });
 
-        const response = await api.get(`/users/${newUser}`);
+        try {
 
-        const data = {
-            name: response.data.name,
-            login: response.data.login,
-            bio: response.data.bio,
-            avatar: response.data.avatar_url
+            const response = await api.get(`/users/${newUser}`);
+
+            const data = {
+                name: response.data.name,
+                login: response.data.login,
+                bio: response.data.bio,
+                avatar: response.data.avatar_url
+            }
+
+            this.setState({
+                users: [...users, data],
+                newUser: '',
+                loading: false
+            });
+
+            Keyboard.dismiss();
         }
-
-        this.setState({
-            users: [...users, data],
-            newUser: '',
-            loading: false
-        });
-
-        Keyboard.dismiss();
+        catch (e) {
+            console.tron.log(e);
+        }
     }
 
     handleNavigate = user => {
@@ -105,7 +119,7 @@ export default class Main extends Component {
                             <Avatar source={{ uri: item.avatar }} />
                             <Name>{item.name}</Name>
                             <Bio>{item.bio}</Bio>
-                            <ProfileButton onPress={() => this.handleAddUser(item)}>
+                            <ProfileButton onPress={() => this.handleNavigate(item)}>
                                 <ProfileButtonText>Ver Perfil</ProfileButtonText>
                             </ProfileButton>
                         </User>
