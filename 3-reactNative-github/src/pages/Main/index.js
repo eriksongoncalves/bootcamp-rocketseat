@@ -25,8 +25,6 @@ export default class Main extends Component {
     }
 
     async componentDidMount() {
-        console.tron.log("teste");
-
         try {
             const users = await AsyncStorage.getItem('users');
 
@@ -45,7 +43,6 @@ export default class Main extends Component {
         const { users } = this.state;
 
         if (prevState.users !== users) {
-            console.tron.log("prevState", prevState);
             AsyncStorage.setItem('users', JSON.stringify(users));
         }
 
